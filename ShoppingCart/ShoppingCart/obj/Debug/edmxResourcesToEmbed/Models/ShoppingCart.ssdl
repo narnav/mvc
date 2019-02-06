@@ -1,0 +1,75 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="ShoppingCartModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityContainer Name="ShoppingCartModelStoreContainer">
+    <EntitySet Name="Category" EntityType="ShoppingCartModel.Store.Category" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Products" EntityType="ShoppingCartModel.Store.Products" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="users" EntityType="ShoppingCartModel.Store.users" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="CateProd" EntityType="ShoppingCartModel.Store.CateProd" store:Type="Views" store:Schema="dbo" store:Name="CateProd">
+      <DefiningQuery>SELECT 
+      [CateProd].[ProductName] AS [ProductName], 
+      [CateProd].[ProductId] AS [ProductId], 
+      [CateProd].[Price] AS [Price], 
+      [CateProd].[amount] AS [amount], 
+      [CateProd].[imgSrc] AS [imgSrc], 
+      [CateProd].[CategoryId] AS [CategoryId]
+      FROM [dbo].[CateProd] AS [CateProd]</DefiningQuery>
+    </EntitySet>
+    <AssociationSet Name="FK_Products_Category" Association="ShoppingCartModel.Store.FK_Products_Category">
+      <End Role="Category" EntitySet="Category" />
+      <End Role="Products" EntitySet="Products" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="Category">
+    <Key>
+      <PropertyRef Name="CategoryId" />
+    </Key>
+    <Property Name="CategoryId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="CategoryDescription" Type="nvarchar" MaxLength="50" />
+    <Property Name="imgSrc" Type="nvarchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="Products">
+    <Key>
+      <PropertyRef Name="ProductId" />
+    </Key>
+    <Property Name="ProductId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="ProductName" Type="nvarchar" MaxLength="50" />
+    <Property Name="Price" Type="float" />
+    <Property Name="amount" Type="int" />
+    <Property Name="imgSrc" Type="nvarchar" MaxLength="50" />
+    <Property Name="CategoryId" Type="int" />
+  </EntityType>
+  <EntityType Name="users">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="userName" Type="nchar" MaxLength="10" />
+    <Property Name="pwd" Type="nchar" MaxLength="10" />
+  </EntityType>
+  <!--Errors Found During Generation:
+      warning 6002: The table/view 'ShoppingCart.dbo.CateProd' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      -->
+  <EntityType Name="CateProd">
+    <Key>
+      <PropertyRef Name="ProductId" />
+    </Key>
+    <Property Name="ProductName" Type="nvarchar" MaxLength="50" />
+    <Property Name="ProductId" Type="int" Nullable="false" />
+    <Property Name="Price" Type="float" />
+    <Property Name="amount" Type="int" />
+    <Property Name="imgSrc" Type="nvarchar" MaxLength="50" />
+    <Property Name="CategoryId" Type="nvarchar" MaxLength="50" />
+  </EntityType>
+  <Association Name="FK_Products_Category">
+    <End Role="Category" Type="ShoppingCartModel.Store.Category" Multiplicity="0..1" />
+    <End Role="Products" Type="ShoppingCartModel.Store.Products" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Category">
+        <PropertyRef Name="CategoryId" />
+      </Principal>
+      <Dependent Role="Products">
+        <PropertyRef Name="CategoryId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>

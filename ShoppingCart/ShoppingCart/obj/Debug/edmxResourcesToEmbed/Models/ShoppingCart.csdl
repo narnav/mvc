@@ -1,0 +1,65 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="ShoppingCartModel" Alias="Self" p1:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:p1="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityContainer Name="ShoppingCartEntities2" p1:LazyLoadingEnabled="true">
+    <EntitySet Name="Products" EntityType="ShoppingCartModel.Products" />
+    <EntitySet Name="Category" EntityType="ShoppingCartModel.Category" />
+    <AssociationSet Name="FK_Products_Category" Association="ShoppingCartModel.FK_Products_Category">
+      <End Role="Category" EntitySet="Category" />
+      <End Role="Products" EntitySet="Products" />
+    </AssociationSet>
+    <EntitySet Name="CateProd" EntityType="ShoppingCartModel.CateProd" />
+    <EntitySet Name="users" EntityType="ShoppingCartModel.users" />
+  </EntityContainer>
+  <EntityType Name="Products">
+    <Key>
+      <PropertyRef Name="ProductId" />
+    </Key>
+    <Property Name="ProductId" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+    <Property Name="ProductName" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+    <Property Name="Price" Type="Double" />
+    <Property Name="amount" Type="Int32" />
+    <Property Name="imgSrc" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+    <Property Type="Int32" Name="CategoryId" />
+    <NavigationProperty Name="Category" Relationship="ShoppingCartModel.FK_Products_Category" FromRole="Products" ToRole="Category" />
+  </EntityType>
+  <EntityType Name="Category">
+    <Key>
+      <PropertyRef Name="CategoryId" />
+    </Key>
+    <Property Type="Int32" Name="CategoryId" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Type="String" Name="CategoryDescription" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Type="String" Name="imgSrc" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Products" Relationship="ShoppingCartModel.FK_Products_Category" FromRole="Category" ToRole="Products" />
+  </EntityType>
+  <Association Name="FK_Products_Category">
+    <End Type="ShoppingCartModel.Category" Role="Category" Multiplicity="0..1" />
+    <End Type="ShoppingCartModel.Products" Role="Products" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Category">
+        <PropertyRef Name="CategoryId" />
+      </Principal>
+      <Dependent Role="Products">
+        <PropertyRef Name="CategoryId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="CateProd">
+    <Key>
+      <PropertyRef Name="ProductId" />
+    </Key>
+    <Property Type="String" Name="ProductName" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Type="Int32" Name="ProductId" Nullable="false" />
+    <Property Type="Double" Name="Price" />
+    <Property Type="Int32" Name="amount" />
+    <Property Type="String" Name="imgSrc" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Type="String" Name="CategoryId" MaxLength="50" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="users">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Type="Int32" Name="id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Type="String" Name="userName" MaxLength="10" FixedLength="true" Unicode="true" />
+    <Property Type="String" Name="pwd" MaxLength="10" FixedLength="true" Unicode="true" />
+  </EntityType>
+</Schema>

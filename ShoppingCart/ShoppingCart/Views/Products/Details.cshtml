@@ -1,0 +1,58 @@
+﻿@model ShoppingCart.Models.Products
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h1>Details</h1>
+
+<fieldset>
+    <legend>Employees</legend>
+    <table>
+        <tr>
+        <td><div class="display-label">
+           @Html.DisplayNameFor(model => model.ProductId)
+        </div></td>
+        <td><div class="display-field">
+            @Html.DisplayFor(model => model.ProductId)
+        </div></td>
+            </tr>
+        <tr>
+            <td><div class="display-label">
+                    @Html.DisplayNameFor(model => model.ProductName)
+                </div>
+                </td>
+            <td><div class="display-field">
+                @Html.DisplayFor(model => model.ProductName)
+            </div></td>
+        </tr>
+        <tr>
+        <td><div class="display-label">
+            @Html.DisplayNameFor(model => model.Price)
+        </div></td>
+        <td><div class="display-field">
+            @Html.DisplayFor(model => model.Price)
+        </div></td></tr>
+        
+        <tr><td>
+                <div class="display-label">
+                    Category
+                </div></td>
+            <td><div class="display-field">
+                    @ViewBag.CategoryDesc
+                </div></td></tr>
+        <tr><td>
+                <div class="display-label">
+                    Image
+                </div></td><td>
+                               <div class="display-field">
+                                   <img src="@Html.DisplayFor(model => model.imgSrc)" width=50>
+                               </div></td></tr>
+    </table>
+</fieldset>
+<p>
+    <div class="link-field">
+    @Html.ActionLink("Edit", "Edit", new {  id=Model.ProductId  }) |
+    @Html.ActionLink("Back to List", "Index")
+        </div>
+</p>
